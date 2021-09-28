@@ -1,30 +1,19 @@
-package petsdb
+package petsweb
 
 import (
+	"cloud.google.com/go/firestore"
 	"context"
 	"log"
 	"os"
-	"time"
-
-	"cloud.google.com/go/firestore"
+	"takeoff-projects/denys-klymenko/core/pets"
 )
 
 var projectID string
 
 // Pet model stored in Datastore
-type Pet struct {
-	Added   time.Time `firestore:"added" json:"added"`
-	Caption string    `firestore:"caption" json:"caption"`
-	Email   string    `firestore:"email" json:"email"`
-	Image   string    `firestore:"image" json:"image"`
-	Likes   int       `firestore:"likes" json:"likes"`
-	Owner   string    `firestore:"owner" json:"owner"`
-	Petname string    `firestore:"petname" json:"petname"`
-	Name    string    // The ID used in the datastore.
-}
 
 // GetPets Returns all pets from datastore ordered by likes in Desc Order
-func GetPets() ([]Pet, error) {
+func GetPets() ([]pets.Pet, error) {
 	projectID = os.Getenv("GOOGLE_CLOUD_PROJECT")
 	if projectID == "" {
 		log.Fatal(`You need to set the environment variable "GOOGLE_CLOUD_PROJECT"`)
@@ -45,22 +34,22 @@ func GetPets() ([]Pet, error) {
 		log.Fatalf("Could not get pets: %v", err)
 	}
 
-	var pets []Pet
+	var ps []pets.Pet
 	for _, snapshot := range all {
-		var pet Pet
+		var pet pets.Pet
 		err := snapshot.DataTo(&pet)
 		if err != nil {
 			log.Fatalf("Could not convert document to Pet type: %v", err)
 		}
 
 		pet.Name = snapshot.Ref.ID
-		pets = append(pets, pet)
+		ps = append(ps, pet)
 	}
 
-	return pets, nil
+	return ps, nil
 }
 
-func Add(pet Pet) error {
+func Add(pet pets.Pet) error {
 	projectID = os.Getenv("GOOGLE_CLOUD_PROJECT")
 	if projectID == "" {
 		log.Fatal(`You need to set the environment variable "GOOGLE_CLOUD_PROJECT"`)

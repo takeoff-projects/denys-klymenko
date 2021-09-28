@@ -1,0 +1,9 @@
+steps:
+  - name: "gcr.io/cloud-builders/docker"
+    args:
+      - build
+      - "--tag=gcr.io/roi-takeoff-user5/pets-api:1"
+      - "--file=./api/ops/pets/Dockerfile"
+      - .
+images:
+  - "gcr.io/roi-takeoff-user5/pets-api:1"

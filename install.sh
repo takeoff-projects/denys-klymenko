@@ -15,6 +15,11 @@ else
     echo "failed to create bucket"
 fi
 
+
+swag init --g api/pets/api.go -o ./docs
+
+#gcloud builds submit .
+
 cd terraform
 terraform init  -backend-config="bucket=denys-klymenko-pets"  &&
 terraform apply -auto-approve &&

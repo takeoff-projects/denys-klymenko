@@ -9,7 +9,8 @@ import (
 	"net/http"
 	"os"
 	"strconv"
-	"takeoff-projects/denys-klymenko/petsdb"
+	"takeoff-projects/denys-klymenko/core/pets"
+	"takeoff-projects/denys-klymenko/petsweb"
 	"time"
 )
 
@@ -45,8 +46,8 @@ func main() {
 }
 
 func indexHandler(w http.ResponseWriter, r *http.Request) {
-	var pets []petsdb.Pet
-	pets, error := petsdb.GetPets()
+	var pets []pets.Pet
+	pets, error := petsweb.GetPets()
 	if error != nil {
 		fmt.Print(error)
 	}
@@ -98,7 +99,7 @@ func addHandler(w http.ResponseWriter, r *http.Request) {
 			return
 		}
 
-		pet := petsdb.Pet{
+		pet := pets.Pet{
 			Added:   time.Now(),
 			Caption: r.FormValue("caption"),
 			Email:   r.FormValue("email"),
@@ -109,7 +110,7 @@ func addHandler(w http.ResponseWriter, r *http.Request) {
 			Name:    uuid.NewString(),
 		}
 
-		err = petsdb.Add(pet)
+		err = petsweb.Add(pet)
 		if err != nil {
 			http.Error(w, err.Error(), http.StatusInternalServerError)
 			log.Println(err.Error())
@@ -143,7 +144,7 @@ func aboutHandler(w http.ResponseWriter, r *http.Request) {
 // HomePageData for Index template
 type HomePageData struct {
 	PageTitle string
-	Pets      []petsdb.Pet
+	Pets      []pets.Pet
 }
 
 // AboutPageData for About template

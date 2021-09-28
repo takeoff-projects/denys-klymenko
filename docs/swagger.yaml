@@ -1,0 +1,257 @@
+basePath: /
+definitions:
+  pets.Create:
+    properties:
+      added:
+        type: string
+      caption:
+        type: string
+      email:
+        type: string
+      image:
+        type: string
+      likes:
+        type: integer
+      owner:
+        type: string
+      petname:
+        type: string
+    required:
+    - added
+    - caption
+    - email
+    - image
+    - likes
+    - owner
+    - petname
+    type: object
+  pets.Pet:
+    properties:
+      added:
+        type: string
+      caption:
+        type: string
+      email:
+        type: string
+      image:
+        type: string
+      likes:
+        type: integer
+      name:
+        type: string
+      owner:
+        type: string
+      petname:
+        type: string
+    type: object
+  pets.Update:
+    properties:
+      added:
+        type: string
+      caption:
+        type: string
+      email:
+        type: string
+      image:
+        type: string
+      likes:
+        type: integer
+      owner:
+        type: string
+      petname:
+        type: string
+    type: object
+info:
+  contact:
+    email: support@swagger.io
+    name: API Support
+    url: http://www.swagger.io/support
+  description: This is a sample server celler server.
+  license:
+    name: Apache 2.0
+    url: http://www.apache.org/licenses/LICENSE-2.0.html
+  termsOfService: http://swagger.io/terms/
+  title: Swagger Example API
+  version: "1.0"
+paths:
+  /pets:
+    get:
+      description: list all pets ordered by likes
+      operationId: listPet
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/pets.Pet'
+            type: array
+        "400":
+          description: Bad Request
+          schema:
+            type: string
+        "404":
+          description: Not Found
+          schema:
+            type: string
+        "500":
+          description: Internal Server Error
+          schema:
+            type: string
+        default:
+          description: ""
+          schema:
+            type: string
+      summary: list all pets
+      x-google-backend:
+        address: ${backend}/pets
+    post:
+      consumes:
+      - application/json
+      description: create a pet
+      operationId: createPet
+      parameters:
+      - description: pet to create
+        in: body
+        name: pet
+        required: true
+        schema:
+          $ref: '#/definitions/pets.Create'
+      responses:
+        "200":
+          description: ok
+          schema:
+            type: string
+        "400":
+          description: Bad Request
+          schema:
+            type: string
+        "404":
+          description: Not Found
+          schema:
+            type: string
+        "500":
+          description: Internal Server Error
+          schema:
+            type: string
+        default:
+          description: ""
+          schema:
+            type: string
+      summary: create a pet
+      x-google-backend:
+        address: ${backend}/pets
+  /pets/{id}:
+    delete:
+      description: delete pet by id
+      operationId: deletePet
+      parameters:
+      - description: pet id
+        in: path
+        name: id
+        required: true
+        type: string
+      responses:
+        "200":
+          description: ok
+          schema:
+            type: string
+        "400":
+          description: Bad Request
+          schema:
+            type: string
+        "404":
+          description: Not Found
+          schema:
+            type: string
+        "500":
+          description: Internal Server Error
+          schema:
+            type: string
+        default:
+          description: ""
+          schema:
+            type: string
+      summary: delete pet by id
+      x-google-backend:
+        address: ${backend}/pets
+    get:
+      description: get pet by id
+      operationId: getPet
+      parameters:
+      - description: pet id
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/pets.Pet'
+        "400":
+          description: Bad Request
+          schema:
+            type: string
+        "404":
+          description: Not Found
+          schema:
+            type: string
+        "500":
+          description: Internal Server Error
+          schema:
+            type: string
+        default:
+          description: ""
+          schema:
+            type: string
+      summary: get pet by id
+      x-google-backend:
+        address: ${backend}/pets
+    put:
+      consumes:
+      - application/json
+      description: update pet by id
+      operationId: updatePet
+      parameters:
+      - description: pet to update
+        in: body
+        name: pet
+        required: true
+        schema:
+          $ref: '#/definitions/pets.Update'
+      - description: pet id
+        in: path
+        name: id
+        required: true
+        type: string
+      responses:
+        "200":
+          description: ok
+          schema:
+            type: string
+        "400":
+          description: Bad Request
+          schema:
+            type: string
+        "404":
+          description: Not Found
+          schema:
+            type: string
+        "500":
+          description: Internal Server Error
+          schema:
+            type: string
+        default:
+          description: ""
+          schema:
+            type: string
+      summary: update pet by id
+      x-google-backend:
+        address: ${backend}/pets
+swagger: "2.0"
+x-extension-openapi:
+  example: value on a json format
