@@ -282,6 +282,51 @@
                     "address": "${backend}/pets"
                 }
             }
+        },
+        "/swagger/index.html": {
+            "get": {
+                "description": "swagger console",
+                "produces": [
+                    "text/html"
+                ],
+                "summary": "swagger",
+                "operationId": "swagger",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "file"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    "default": {
+                        "description": "",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                },
+                "x-google-backend": {
+                    "address": "${backend}/swagger/index.html"
+                }
+            }
         }
     },
     "definitions": {

@@ -252,6 +252,36 @@ paths:
       summary: update pet by id
       x-google-backend:
         address: ${backend}/pets
+  /swagger/index.html:
+    get:
+      description: swagger console
+      operationId: swagger
+      produces:
+      - text/html
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: file
+        "400":
+          description: Bad Request
+          schema:
+            type: string
+        "404":
+          description: Not Found
+          schema:
+            type: string
+        "500":
+          description: Internal Server Error
+          schema:
+            type: string
+        default:
+          description: ""
+          schema:
+            type: string
+      summary: swagger
+      x-google-backend:
+        address: ${backend}/swagger/index.html
 swagger: "2.0"
 x-extension-openapi:
   example: value on a json format

@@ -12,3 +12,5 @@ Run `./install.sh` to create resources and deploy service to App Engine
 ## How to destroy
 
 Run `./uninstall.sh`
+
+![Swagger](./docs/swagger.png)

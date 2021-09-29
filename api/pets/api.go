@@ -9,7 +9,10 @@ import (
 	"cloud.google.com/go/firestore"
 	"github.com/gin-gonic/gin"
 
+	"github.com/swaggo/files"
+	ginSwagger "github.com/swaggo/gin-swagger"
 	"takeoff-projects/denys-klymenko/core/pets"
+	_ "takeoff-projects/denys-klymenko/docs"
 )
 
 // @title Swagger Example API
@@ -48,6 +51,7 @@ func handleRequests(dal *PetsDAL) {
 	r.GET("/pets/:id", h.getPet)
 	r.DELETE("/pets/:id", h.deletePet)
 	r.PUT("/pets/:id", h.updatePet)
+	r.GET("/swagger/*any", ginSwagger.WrapHandler(swaggerFiles.Handler))
 
 	log.Printf("Listening on port %s", port)
 	err := r.Run(":" + port)
@@ -58,6 +62,21 @@ func handleRequests(dal *PetsDAL) {
 
 type Controller struct {
 	dal *PetsDAL
+}
+
+// swagger godoc
+// @Id swagger
+// @Summary swagger
+// @Description swagger console
+// @Produce html
+// @Success 200 {file} file
+// @Failure 400,404 {string} string
+// @Failure 500 {string} string
+// @Failure default {string} string
+// @x-google-backend  {"address": "${backend}/swagger/index.html"}
+// @Router /swagger/index.html [get]
+func (h *Controller) swagger(c *gin.Context) {
+	//stub for swagger
 }
 
 // listPets godoc

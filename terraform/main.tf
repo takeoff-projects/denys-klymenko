@@ -50,13 +50,14 @@ resource "google_app_engine_application" "app" {
 resource "google_cloud_run_service" "default" {
   name     = "pets-api"
   location = var.provider_region
+  project = var.project_id
 
   autogenerate_revision_name = true
 
   template {
     spec {
       containers {
-        image = "gcr.io/roi-takeoff-user5/pets-api:1"
+        image = "gcr.io/roi-takeoff-user5/pets-api:2"
         ports {
           container_port = 8080
         }
@@ -83,14 +84,17 @@ data "google_iam_policy" "noauth" {
       "allUsers",
     ]
   }
+
+  depends_on = [google_cloud_run_service.default]
 }
 
 resource "google_cloud_run_service_iam_policy" "noauth" {
   location = google_cloud_run_service.default.location
-  project  = google_cloud_run_service.default.project
+  project  = var.project_id
   service  = google_cloud_run_service.default.name
 
   policy_data = data.google_iam_policy.noauth.policy_data
+  depends_on = [google_cloud_run_service.default]
 }
 
 resource "google_api_gateway_api" "default" {
@@ -103,7 +107,6 @@ resource "google_api_gateway_api_config" "default" {
   project       = var.project_id
   provider      = google-beta
   api           = google_api_gateway_api.default.api_id
-  api_config_id = "cfg2"
 
   openapi_documents {
     document {
