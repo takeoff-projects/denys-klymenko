@@ -3,14 +3,15 @@ package pets
 import "time"
 
 type Pet struct {
-	Added   time.Time `firestore:"added" json:"added"`
-	Caption string    `firestore:"caption" json:"caption"`
-	Email   string    `firestore:"email" json:"email"`
-	Image   string    `firestore:"image" json:"image"`
-	Likes   int       `firestore:"likes" json:"likes"`
-	Owner   string    `firestore:"owner" json:"owner"`
-	Petname string    `firestore:"petname" json:"petname"`
-	Name    string
+	Added      time.Time `firestore:"added" json:"added"`
+	Caption    string    `firestore:"caption" json:"caption"`
+	Email      string    `firestore:"email" json:"email"`
+	Image      string    `firestore:"image" json:"image"`
+	Likes      int       `firestore:"likes" json:"likes"`
+	Owner      string    `firestore:"owner" json:"owner"`
+	Petname    string    `firestore:"petname" json:"petname"`
+	MoreImages []string  `firestore:"more_images" json:"more_images"`
+	Name       string
 }
 
 type Update struct {

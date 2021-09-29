@@ -19,3 +19,4 @@ tmp/
 firebase-debug.log
 .terraform
 *.iml
+images.zip

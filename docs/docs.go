@@ -398,6 +398,12 @@ var doc = `{
                 "likes": {
                     "type": "integer"
                 },
+                "more_images": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
+                },
                 "name": {
                     "type": "string"
                 },

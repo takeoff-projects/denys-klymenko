@@ -37,6 +37,10 @@ definitions:
         type: string
       likes:
         type: integer
+      more_images:
+        items:
+          type: string
+        type: array
       name:
         type: string
       owner:
